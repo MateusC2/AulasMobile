@@ -1,10 +1,11 @@
 import { StyleSheet, Text, View, TextInput, Button } from "react-native";
 import Login from "./screens/Login"
+import Cadastro from "./screens/Cadastro";
 
 export default function App() {
   return (
     <View style = {styles.container}>
-      <Login/>
+      <Cadastro/>
     </View>
   );
 }

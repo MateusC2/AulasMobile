@@ -19,9 +19,10 @@ export default function Login() {
     await api.postLogin(user).then(
         (response)=>{
             console.log(response.data.message)
-            Alert.alert(response.data.message)
+            Alert.alert('OK',response.data.message)
         },(error)=>{
-            console.log(error)
+            console.log(error.response.data.error)
+            Alert.alert('Erro', error.response.data.error)
         }
     )
   }
