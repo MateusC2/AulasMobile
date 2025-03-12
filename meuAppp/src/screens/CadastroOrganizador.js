@@ -74,7 +74,7 @@ export default function CadastroOrganizador({ navigation }) {
         onPress={handleCadastroOrganizador}
         style={styles.button}
       >
-        <Text>Entrar</Text>
+        <Text>Cadastrar</Text>
       </TouchableOpacity>
       <Button
         title="Voltar para Home"

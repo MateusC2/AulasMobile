@@ -80,7 +80,7 @@ export default function Cadastro({navigation}) {
         }}
       ></TextInput>
       <TouchableOpacity onPress={handleCadastro} style={styles.button}>
-        <Text>Entrar</Text>
+        <Text>Cadastrar</Text>
       </TouchableOpacity>
       <Button title="Voltar para login" onPress={()=> navigation.navigate("Login")}/>
     </View>
