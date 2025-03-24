@@ -11,13 +11,16 @@ import {
 import api from "../axios/axios";
 import Cadastro from "./Cadastro";
 import { Ionicons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 
-export default function Login({ navigation }) {
+export default function Login({}) {
   const [user, setUser] = useState({
     email: "",
     password: "",
     showPassord: false,
   });
+
+  const navigation = useNavigation();
 
   async function handleLogin() {
     await api.postLogin(user).then(
@@ -36,14 +39,16 @@ export default function Login({ navigation }) {
   return (
     <View style={styles.container}>
       <Text style={styles.tittle}>Faça Login</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Email"
-        value={user.email}
-        onChangeText={(value) => {
-          setUser({ ...user, email: value });
-        }}
-      ></TextInput>
+      <View style={styles.passwordContainer}>
+        <TextInput
+          style={styles.passwordInput}
+          placeholder="Email"
+          value={user.email}
+          onChangeText={(value) => {
+            setUser({ ...user, email: value });
+          }}
+        ></TextInput>
+      </View>
       <View style={styles.passwordContainer}>
         <TextInput
           style={styles.passwordInput}
@@ -54,8 +59,14 @@ export default function Login({ navigation }) {
             setUser({ ...user, password: value });
           }}
         ></TextInput>
-        <TouchableOpacity onPress={()=> setUser({...user,showPassord:!user.showPassord})}>
-          <Ionicons name={user.showPassord?"eye-off":"eye"} size={24} color="gray" />
+        <TouchableOpacity
+          onPress={() => setUser({ ...user, showPassord: !user.showPassord })}
+        >
+          <Ionicons
+            name={user.showPassord ? "eye-off" : "eye"}
+            size={24}
+            color="gray"
+          />
         </TouchableOpacity>
       </View>
       <TouchableOpacity onPress={handleLogin} style={styles.button}>
@@ -95,11 +106,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     width: "100%",
-    borderBottomWidth:1,
+    borderBottomWidth: 1,
     paddingRight: 10,
   },
-  passwordInput:{
-    flex:1,
-    height:40,
-  }
+  passwordInput: {
+    flex: 1,
+    height: 40,
+  },
 });
