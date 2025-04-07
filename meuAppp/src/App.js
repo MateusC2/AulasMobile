@@ -7,13 +7,19 @@ import CadastroOrganizador from "./screens/CadastroOrganizador";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import Layout from "./components/Layout";
+import TaskList from "./screens/TaskList";
+import TaskDetail from "./screens/TaskDetail";
 
 const Stack = createStackNavigator();
 
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{headerShown:false}}>
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="TaskList" component={TaskList} />
+
+        <Stack.Screen name="TaskDetail" component={TaskDetail} />
+
         <Stack.Screen
           name="Login"
           component={() => (
