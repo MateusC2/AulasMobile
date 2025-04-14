@@ -40,7 +40,7 @@ export default function TaskList({ navigation }) {
     <View style={styles.container}>
       <FlatList
         data={tasks}
-        keyExtractor={(item) => item.id.toString}
+        keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <TouchableOpacity
             style={styles.itemCard}
