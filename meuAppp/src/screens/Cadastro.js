@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { use, useState } from "react";
 import {
   View,
   Text,
@@ -11,7 +11,8 @@ import {
 import api from "../axios/axios";
 import {useNavigation} from "@react-navigation/native"
 
-export default function Cadastro({}) {
+export default function Cadastro() {
+  const navigation = useNavigation();
   const [user, setUser] = useState({
     name: "",
     cpf: "",
@@ -19,13 +20,13 @@ export default function Cadastro({}) {
     password: "",
     data_nascimento: "",
   });
-  const navigation = useNavigation();
 
   async function handleCadastro() {
     await api.postCadastro(user).then(
       (response) => {
         console.log(response.data.message);
         Alert.alert("OK", response.data.message);
+        navigation.navigate("Login");
       },
       (error) => {
         console.log(error.response.data.error);
@@ -82,9 +83,10 @@ export default function Cadastro({}) {
         }}
       ></TextInput>
       <TouchableOpacity onPress={handleCadastro} style={styles.button}>
-        <Text>Cadastrar</Text>
+        <Text>Entrar</Text>
       </TouchableOpacity>
-      <Button title="Voltar para login" onPress={()=> navigation.navigate("Login")}/>
+
+      <Button title="Voltar para Login" onPress={()=> navigation.navigate("Login")}/>
     </View>
   );
 }
@@ -107,8 +109,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   button: {
-    backgroundColor: "green",
+    backgroundColor: "red",
     padding: 10,
     borderRadius: 5,
+    margin: 5
   },
 });

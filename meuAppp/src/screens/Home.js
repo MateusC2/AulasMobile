@@ -6,14 +6,18 @@ export default function Home({ navigation }) {
     <View style={styles.container}>
       <Button
         title="Evento"
+        style={{ padding: 10 }}
         onPress={() => navigation.navigate("CadastroEvento")}
       />
       <Button
         title="Organizador"
+        style={{ padding: 10 }}
         onPress={() => navigation.navigate("CadastroOrganizador")}
       />
+      
       <Button
         title="Ingresso"
+        style={{ padding: 10 }}
         onPress={() => navigation.navigate("CadastroIngresso")}
       />
     </View>
