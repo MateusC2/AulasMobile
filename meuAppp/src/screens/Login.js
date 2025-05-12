@@ -9,24 +9,30 @@ import {
   Button,
 } from "react-native";
 import api from "../axios/axios";
-import Cadastro from "./Cadastro";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import * as SecureStore from "expo-secure-store";
 
 export default function Login({}) {
   const [user, setUser] = useState({
     email: "",
     password: "",
-    showPassord: false,
+    showPassword: false,
   });
 
   const navigation = useNavigation();
+
+  async function saveToken(token) {
+    await SecureStore.setItemAsync("authToken", token);
+    console.log(token);
+  }
 
   async function handleLogin() {
     await api.postLogin(user).then(
       (response) => {
         console.log(response.data.message);
-        Alert.alert("OK", response.data.message);
+        saveToken(response.data.token);
+        Alert.alert("Sucesso", response.data.message);
         navigation.navigate("EventosScreen");
       },
       (error) => {
@@ -38,44 +44,60 @@ export default function Login({}) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.tittle}>Faça Login</Text>
-      <View style={styles.passwordContainer}>
+      <Text style={styles.title}>Acesse sua conta</Text>
+      <View style={styles.inputContainer}>
+        <Ionicons
+          name="mail-outline"
+          size={20}
+          color="#888"
+          style={styles.inputIcon}
+        />
         <TextInput
-          style={styles.passwordInput}
+          style={styles.input}
           placeholder="Email"
+          keyboardType="email-address"
           value={user.email}
           onChangeText={(value) => {
             setUser({ ...user, email: value });
           }}
-        ></TextInput>
+        />
       </View>
-      <View style={styles.passwordContainer}>
+      <View style={styles.inputContainer}>
+        <Ionicons
+          name="lock-closed-outline"
+          size={20}
+          color="#888"
+          style={styles.inputIcon}
+        />
         <TextInput
-          style={styles.passwordInput}
+          style={styles.input}
           placeholder="Senha"
+          secureTextEntry={!user.showPassword}
           value={user.password}
-          secureTextEntry={user.showPassord}
           onChangeText={(value) => {
             setUser({ ...user, password: value });
           }}
-        ></TextInput>
+        />
         <TouchableOpacity
-          onPress={() => setUser({ ...user, showPassord: !user.showPassord })}
+          style={styles.eyeIcon}
+          onPress={() => setUser({ ...user, showPassword: !user.showPassword })}
         >
           <Ionicons
-            name={user.showPassord ? "eye-off" : "eye"}
+            name={user.showPassword ? "eye-off-outline" : "eye-outline"}
             size={24}
-            color="gray"
+            color="#888"
           />
         </TouchableOpacity>
       </View>
-      <TouchableOpacity onPress={handleLogin} style={styles.button}>
-        <Text>Entrar</Text>
+      <TouchableOpacity onPress={handleLogin} style={styles.loginButton}>
+        <Text style={styles.loginButtonText}>Entrar</Text>
       </TouchableOpacity>
-      <Button
-        title="Cadastro"
+      <TouchableOpacity
         onPress={() => navigation.navigate("Cadastro")}
-      />
+        style={styles.registerButton}
+      >
+        <Text style={styles.registerButtonText}>Criar conta</Text>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -85,32 +107,66 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    padding: 30,
+    backgroundColor: "#f9f9f9", // Um fundo cinza bem claro
   },
-  tittle: {
+  title: {
     fontSize: 28,
     fontWeight: "bold",
+    marginBottom: 40,
+    color: "#333",
   },
-  input: {
-    width: "100%",
-    height: 40,
-    borderBottomWidth: 1,
-    marginBottom: 10,
-    paddingHorizontal: 10,
-  },
-  button: {
-    backgroundColor: "green",
-    padding: 10,
-    borderRadius: 5,
-  },
-  passwordContainer: {
+  inputContainer: {
     flexDirection: "row",
     alignItems: "center",
     width: "100%",
-    borderBottomWidth: 1,
-    paddingRight: 10,
+    backgroundColor: "#fff",
+    borderRadius: 8,
+    marginBottom: 20,
+    paddingHorizontal: 15,
+    borderWidth: 1,
+    borderColor: "#ddd",
   },
-  passwordInput: {
+  inputIcon: {
+    marginRight: 10,
+  },
+  input: {
     flex: 1,
-    height: 40,
+    height: 50,
+    fontSize: 16,
+    color: "#333",
+  },
+  eyeIcon: {
+    padding: 10,
+  },
+  loginButton: {
+    backgroundColor: "#007bff", // Um azul mais chamativo
+    paddingVertical: 10,
+    paddingHorizontal: 10,
+    borderRadius: 8,
+    width: "100%",
+    alignItems: "center",
+    marginBottom: 15,
+    elevation: 3, // Adiciona uma pequena sombra
+  },
+  loginButtonText: {
+    color: "#fff",
+    fontSize: 18,
+    fontWeight: "bold",
+  },
+  registerButton: {
+    backgroundColor: "#007bff",
+    paddingVertical: 12,
+    paddingHorizontal: 10,
+    width: "100%",
+    alignItems: "center",
+    borderWidth: 1,
+    borderColor: "#007bff",
+    borderRadius: 8,
+  },
+  registerButtonText: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "bold",
   },
 });
