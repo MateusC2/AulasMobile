@@ -82,7 +82,7 @@ export default function Cadastro() {
                 <Ionicons name="calendar-outline" size={20} color="#888" style={styles.inputIcon} />
                 <TextInput
                     style={styles.input}
-                    placeholder="Data de nascimento (DD/MM/AAAA)"
+                    placeholder="Data de nascimento (AAAA-MM-DD)"
                     keyboardType="numeric"
                     value={user.data_nascimento}
                     onChangeText={(value) => setUser({ ...user, data_nascimento: value })}

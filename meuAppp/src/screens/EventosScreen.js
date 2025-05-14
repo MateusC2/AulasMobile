@@ -11,6 +11,7 @@ import {
     TextInput,
     Alert,
 } from "react-native";
+import * as SecureStore from "expo-secure-store";
 
 export default function EventoScreen() {
     const [eventos, setEventos] = useState([]);
@@ -49,7 +50,9 @@ export default function EventoScreen() {
         getEventos();
     }, []);
 
+
     async function getEventos() {
+        const token = await SecureStore.getItemAsync("token")
         try {
             const response = await api.getEventos("/eventos");
             setEventos(response.data.events);

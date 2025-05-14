@@ -23,8 +23,7 @@ export default function Login({}) {
   const navigation = useNavigation();
 
   async function saveToken(token) {
-    await SecureStore.setItemAsync("authToken", token);
-    console.log(token);
+    await SecureStore.setItemAsync("token", token);
   }
 
   async function handleLogin() {
