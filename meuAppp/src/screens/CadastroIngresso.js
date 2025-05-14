@@ -14,14 +14,16 @@ export default function CadastroIngresso({ navigation }) {
   const [ingresso, setIngresso] = useState({
     preco: "",
     tipo: "",
-    fk_id_ingresso: "",
+    fk_id_evento: "",
   });
 
   async function handleCadastroIngresso() {
     await api.postCadastroIngresso(ingresso).then(
       (response) => {
         console.log(response.data.message);
-        Alert.alert("OK", response.data.message);
+        Alert.alert("Sucesso", response.data.message);
+        // Opcional: Limpar os campos após o cadastro bem-sucedido
+        setIngresso({ preco: "", tipo: "", fk_id_evento: "" });
       },
       (error) => {
         console.log(error.response.data.error);
@@ -32,41 +34,35 @@ export default function CadastroIngresso({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.tittle}>Faça Cadastro do ingresso</Text>
+      <Text style={styles.title}>Cadastrar Ingresso</Text>
       <TextInput
         style={styles.input}
-        placeholder="Preço do ingresso"
+        placeholder="Preço do Ingresso"
+        keyboardType="numeric"
         value={ingresso.preco}
-        onChangeText={(value) => {
-          setIngresso({ ...ingresso, preco: value });
-        }}
-      ></TextInput>
+        onChangeText={(value) => setIngresso({ ...ingresso, preco: value })}
+      />
 
       <TextInput
         style={styles.input}
-        placeholder="tipo"
+        placeholder="Tipo de Ingresso (ex: VIP, Comum)"
         value={ingresso.tipo}
-        onChangeText={(value) => {
-          setIngresso({ ...ingresso, tipo: value });
-        }}
-      ></TextInput>
+        onChangeText={(value) => setIngresso({ ...ingresso, tipo: value })}
+      />
       <TextInput
         style={styles.input}
-        placeholder="Fk Id do Evento"
+        placeholder="ID do Evento"
         keyboardType="numeric"
         value={ingresso.fk_id_evento}
-        onChangeText={(value) => {
-          setIngresso({ ...ingresso, fk_id_evento: value });
-        }}
-      ></TextInput>
-
-      <TouchableOpacity onPress={handleCadastroIngresso} style={styles.button}>
-        <Text>Cadastrar</Text>
-      </TouchableOpacity>
-      <Button
-        title="Voltar para Home"
-        onPress={() => navigation.navigate("Home")}
+        onChangeText={(value) => setIngresso({ ...ingresso, fk_id_evento: value })}
       />
+
+      <TouchableOpacity style={styles.cadastroButton} onPress={handleCadastroIngresso}>
+        <Text style={styles.cadastroButtonText}>Cadastrar Ingresso</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.voltarButton} onPress={() => navigation.navigate("Home")}>
+        <Text style={styles.voltarButtonText}>Voltar para Home</Text>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -74,23 +70,52 @@ export default function CadastroIngresso({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    padding: 20,
+    backgroundColor: "#f4f4f4",
     justifyContent: "center",
     alignItems: "center",
   },
-  tittle: {
-    fontSize: 28,
+  title: {
+    fontSize: 24,
     fontWeight: "bold",
+    marginBottom: 30,
+    color: "#333",
+    textAlign: "center",
   },
   input: {
     width: "100%",
-    height: 40,
-    borderBottomWidth: 1,
-    marginBottom: 10,
-    paddingHorizontal: 10,
+    height: 45,
+    borderColor: "#ccc",
+    borderWidth: 1,
+    borderRadius: 8,
+    marginBottom: 15,
+    paddingHorizontal: 15,
+    backgroundColor: "#fff",
+    fontSize: 16,
   },
-  button: {
-    backgroundColor: "green",
-    padding: 10,
-    borderRadius: 5,
+  cadastroButton: {
+    backgroundColor: "blue",
+    paddingVertical: 12,
+    borderRadius: 8,
+    alignItems: "center",
+    marginBottom: 15,
+    width: "100%",
+  },
+  cadastroButtonText: {
+    color: "#fff",
+    fontSize: 18,
+    fontWeight: "bold",
+  },
+  voltarButton: {
+    backgroundColor: "blue",
+    paddingVertical: 12,
+    borderRadius: 8,
+    alignItems: "center",
+    width: "100%",
+  },
+  voltarButtonText: {
+    color: "#fff",
+    fontSize: 18,
+    fontWeight: "bold",
   },
 });

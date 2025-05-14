@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
     color: "#333",
   },
   registerButton: {
-    backgroundColor: "#007bff", // Cor verde para cadastro
+    backgroundColor: "blue", // Cor verde para cadastro
     paddingVertical: 10,
     paddingHorizontal: 10,
     borderRadius: 8,
@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   loginButton: {
-    backgroundColor: "#007bff",
+    backgroundColor: "blue",
     paddingVertical: 12,
     paddingHorizontal: 12,
     width: "100%",

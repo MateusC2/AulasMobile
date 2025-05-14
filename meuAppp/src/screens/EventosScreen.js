@@ -11,6 +11,7 @@ import {
     TextInput,
     Alert,
 } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import * as SecureStore from "expo-secure-store";
 
 export default function EventoScreen() {
@@ -72,9 +73,16 @@ export default function EventoScreen() {
             console.log("Erro ao buscar ingressos", error.response);
         }
     }
-
+    const navigation = useNavigation()
     return (
         <View style={styles.container}>
+            <TouchableOpacity onPress={()=>{
+                navigation.navigate("CadastroEvento");
+            }}>
+                <Text>
+                    Criar Novo Evento
+                </Text>
+            </TouchableOpacity>
             <Text style={styles.title}>Eventos Disponíveis</Text>
             {loading ? (
                 <ActivityIndicator size="large" color="#007bff" />

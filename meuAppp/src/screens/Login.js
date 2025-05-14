@@ -32,7 +32,7 @@ export default function Login({}) {
         console.log(response.data.message);
         saveToken(response.data.token);
         Alert.alert("Sucesso", response.data.message);
-        navigation.navigate("EventosScreen");
+        navigation.navigate("Home");
       },
       (error) => {
         console.log(error.response.data.error);
@@ -139,9 +139,9 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   loginButton: {
-    backgroundColor: "#007bff", // Um azul mais chamativo
-    paddingVertical: 10,
-    paddingHorizontal: 10,
+    backgroundColor: "blue", // Um azul mais chamativo
+    paddingVertical: 12,
+    paddingHorizontal: 25,
     borderRadius: 8,
     width: "100%",
     alignItems: "center",
@@ -154,7 +154,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   registerButton: {
-    backgroundColor: "#007bff",
+    backgroundColor: "blue",
     paddingVertical: 12,
     paddingHorizontal: 10,
     width: "100%",
