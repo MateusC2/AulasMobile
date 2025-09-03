@@ -10,6 +10,8 @@ import {
   Image,
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
+import { createEvento } from "./axios/api";
+import { Alert } from "react-native";
 
 export default function Cam() {
   const [permission, requestPermission] = useCameraPermissions();
@@ -34,6 +36,22 @@ export default function Cam() {
       const data = await camRef.current.takePictureAsync();
       setCapturedPhoto(data.uri);
       setOpen(true);
+
+      //Simular um formulario
+      const form = {
+        nome:"Evento Teste",
+        descricao:"Evento Teste Image Mobile",
+        data_hora:"2025-09-03 09:00:00",
+        local:"Franca",
+        fk_id_organizador:1
+      }
+      try{
+        const response = await createEvento(form,data.uri)
+        console.log("Evento Criado", response.data)
+        Alert.alert(response.data.message)
+      }catch(error){
+        console.log("Error", error.response.data.error)
+      }
     }
   }
 
