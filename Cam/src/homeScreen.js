@@ -38,6 +38,9 @@ const HomeScreen = () => {
           color={stateLed.value ? "red" : "green"}
         />
       </View>
+      <View style={{marginTop:20}}>
+      <Button title="Listar Eventos" onPress={() => navigation.navigate("Eventos")} />
+      </View>
     </View>
   );
 };
